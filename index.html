@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 955px;
+            height: 666px;
+        }
+        </style>
+        <title>webgis ptn surabaya</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/aksesibilitas_univunion_10.js"></script>
+        <script src="data/univ_surabaya_11.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[-7.426242748435698,112.56604056001746],[-7.1845308006463915,112.91250736328254]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_its_manyar_0');
+        map.getPane('pane_its_manyar_0').style.zIndex = 400;
+        var img_its_manyar_0 = 'data/its_manyar_0.png';
+        var img_bounds_its_manyar_0 = [[-197.0,0.0],[0.0,350.0]];
+        var layer_its_manyar_0 = new L.imageOverlay(img_its_manyar_0,
+                                              img_bounds_its_manyar_0,
+                                              {pane: 'pane_its_manyar_0'});
+        bounds_group.addLayer(layer_its_manyar_0);
+        map.addLayer(layer_its_manyar_0);
+        map.createPane('pane_its_sukolilo_1');
+        map.getPane('pane_its_sukolilo_1').style.zIndex = 401;
+        var img_its_sukolilo_1 = 'data/its_sukolilo_1.png';
+        var img_bounds_its_sukolilo_1 = [[-233.0,0.0],[0.0,350.0]];
+        var layer_its_sukolilo_1 = new L.imageOverlay(img_its_sukolilo_1,
+                                              img_bounds_its_sukolilo_1,
+                                              {pane: 'pane_its_sukolilo_1'});
+        bounds_group.addLayer(layer_its_sukolilo_1);
+        map.addLayer(layer_its_sukolilo_1);
+        map.createPane('pane_uin_2');
+        map.getPane('pane_uin_2').style.zIndex = 402;
+        var img_uin_2 = 'data/uin_2.png';
+        var img_bounds_uin_2 = [[-233.0,0.0],[0.0,350.0]];
+        var layer_uin_2 = new L.imageOverlay(img_uin_2,
+                                              img_bounds_uin_2,
+                                              {pane: 'pane_uin_2'});
+        bounds_group.addLayer(layer_uin_2);
+        map.addLayer(layer_uin_2);
+        map.createPane('pane_unair_a_3');
+        map.getPane('pane_unair_a_3').style.zIndex = 403;
+        var img_unair_a_3 = 'data/unair_a_3.png';
+        var img_bounds_unair_a_3 = [[-198.0,0.0],[0.0,350.0]];
+        var layer_unair_a_3 = new L.imageOverlay(img_unair_a_3,
+                                              img_bounds_unair_a_3,
+                                              {pane: 'pane_unair_a_3'});
+        bounds_group.addLayer(layer_unair_a_3);
+        map.addLayer(layer_unair_a_3);
+        map.createPane('pane_unair_b_4');
+        map.getPane('pane_unair_b_4').style.zIndex = 404;
+        var img_unair_b_4 = 'data/unair_b_4.png';
+        var img_bounds_unair_b_4 = [[-270.0,0.0],[0.0,350.0]];
+        var layer_unair_b_4 = new L.imageOverlay(img_unair_b_4,
+                                              img_bounds_unair_b_4,
+                                              {pane: 'pane_unair_b_4'});
+        bounds_group.addLayer(layer_unair_b_4);
+        map.addLayer(layer_unair_b_4);
+        map.createPane('pane_unair_c_5');
+        map.getPane('pane_unair_c_5').style.zIndex = 405;
+        var img_unair_c_5 = 'data/unair_c_5.png';
+        var img_bounds_unair_c_5 = [[-252.0,0.0],[0.0,350.0]];
+        var layer_unair_c_5 = new L.imageOverlay(img_unair_c_5,
+                                              img_bounds_unair_c_5,
+                                              {pane: 'pane_unair_c_5'});
+        bounds_group.addLayer(layer_unair_c_5);
+        map.addLayer(layer_unair_c_5);
+        map.createPane('pane_unesa_ketintang_6');
+        map.getPane('pane_unesa_ketintang_6').style.zIndex = 406;
+        var img_unesa_ketintang_6 = 'data/unesa_ketintang_6.png';
+        var img_bounds_unesa_ketintang_6 = [[-233.0,0.0],[0.0,350.0]];
+        var layer_unesa_ketintang_6 = new L.imageOverlay(img_unesa_ketintang_6,
+                                              img_bounds_unesa_ketintang_6,
+                                              {pane: 'pane_unesa_ketintang_6'});
+        bounds_group.addLayer(layer_unesa_ketintang_6);
+        map.addLayer(layer_unesa_ketintang_6);
+        map.createPane('pane_unesa_lidahwetan_7');
+        map.getPane('pane_unesa_lidahwetan_7').style.zIndex = 407;
+        var img_unesa_lidahwetan_7 = 'data/unesa_lidahwetan_7.png';
+        var img_bounds_unesa_lidahwetan_7 = [[-263.0,0.0],[0.0,350.0]];
+        var layer_unesa_lidahwetan_7 = new L.imageOverlay(img_unesa_lidahwetan_7,
+                                              img_bounds_unesa_lidahwetan_7,
+                                              {pane: 'pane_unesa_lidahwetan_7'});
+        bounds_group.addLayer(layer_unesa_lidahwetan_7);
+        map.addLayer(layer_unesa_lidahwetan_7);
+        map.createPane('pane_upnv_jatim_8');
+        map.getPane('pane_upnv_jatim_8').style.zIndex = 408;
+        var img_upnv_jatim_8 = 'data/upnv_jatim_8.png';
+        var img_bounds_upnv_jatim_8 = [[-350.0,0.0],[0.0,350.0]];
+        var layer_upnv_jatim_8 = new L.imageOverlay(img_upnv_jatim_8,
+                                              img_bounds_upnv_jatim_8,
+                                              {pane: 'pane_upnv_jatim_8'});
+        bounds_group.addLayer(layer_upnv_jatim_8);
+        map.addLayer(layer_upnv_jatim_8);
+        map.createPane('pane_OSMStandard_9');
+        map.getPane('pane_OSMStandard_9').style.zIndex = 409;
+        var layer_OSMStandard_9 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_9',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_9;
+        map.addLayer(layer_OSMStandard_9);
+        function pop_aksesibilitas_univunion_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td class="visible-with-data" id="fid"colspan="2"><strong>fid</strong><br />' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Access'] !== null ? autolinker.link(feature.properties['Access'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_aksesibilitas_univunion_10_0() {
+            return {
+                pane: 'pane_aksesibilitas_univunion_10',
+                opacity: 1,
+                color: 'rgba(141,90,153,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_aksesibilitas_univunion_10');
+        map.getPane('pane_aksesibilitas_univunion_10').style.zIndex = 410;
+        map.getPane('pane_aksesibilitas_univunion_10').style['mix-blend-mode'] = 'normal';
+        var layer_aksesibilitas_univunion_10 = new L.geoJson(json_aksesibilitas_univunion_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_aksesibilitas_univunion_10',
+            layerName: 'layer_aksesibilitas_univunion_10',
+            pane: 'pane_aksesibilitas_univunion_10',
+            onEachFeature: pop_aksesibilitas_univunion_10,
+            style: style_aksesibilitas_univunion_10_0,
+        });
+        bounds_group.addLayer(layer_aksesibilitas_univunion_10);
+        map.addLayer(layer_aksesibilitas_univunion_10);
+        function pop_univ_surabaya_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama'] !== null ? autolinker.link(feature.properties['Nama'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kampus'] !== null ? autolinker.link(feature.properties['Kampus'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['foto'] !== null ? autolinker.link(feature.properties['foto'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Deskripsi Univ_QS WUR'] !== null ? autolinker.link(feature.properties['Deskripsi Univ_QS WUR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Deskripsi Univ_Didirikan'] !== null ? autolinker.link(feature.properties['Deskripsi Univ_Didirikan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Deskripsi Univ_Fakultas'] !== null ? autolinker.link(feature.properties['Deskripsi Univ_Fakultas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_univ_surabaya_11_0() {
+            return {
+                pane: 'pane_univ_surabaya_11',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,158,23,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_univ_surabaya_11');
+        map.getPane('pane_univ_surabaya_11').style.zIndex = 411;
+        map.getPane('pane_univ_surabaya_11').style['mix-blend-mode'] = 'normal';
+        var layer_univ_surabaya_11 = new L.geoJson(json_univ_surabaya_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_univ_surabaya_11',
+            layerName: 'layer_univ_surabaya_11',
+            pane: 'pane_univ_surabaya_11',
+            onEachFeature: pop_univ_surabaya_11,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_univ_surabaya_11_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_univ_surabaya_11);
+        map.addLayer(layer_univ_surabaya_11);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
+</html>
